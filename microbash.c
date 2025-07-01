@@ -94,6 +94,7 @@ void free_command(command_t *const c) {
     }
     free(c->out_pathname);
     free(c->in_pathname);
+    free(c->args);
     free(c);
 
     /*** TO BE DONE END ***/
@@ -105,6 +106,7 @@ void free_line(line_t *const l) {
     for (int i = 0; i < l->n_commands; ++i) {
         free_command(l->commands[i]);
     }
+    free(l->commands);
     free(l);
     /*** TO BE DONE END ***/
 }
@@ -324,7 +326,7 @@ void redirect(int from_fd, int to_fd) {
      * equivalent to the original from_fd, and then close from_fd
      */
     /*** TO BE DONE START ***/
-    if (from_fd != NO_REDIR) {
+    if (from_fd != NO_REDIR && from_fd != to_fd) {
         if (dup2(from_fd, to_fd) == -1) {
             fatal_errno("dup2 failed");
         }
