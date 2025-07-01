@@ -1,0 +1,4 @@
+bar
+dati.txt
+output.txt
+text.txt
